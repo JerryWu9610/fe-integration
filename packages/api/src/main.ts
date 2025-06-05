@@ -5,6 +5,7 @@ import { HttpExceptionFilter } from './common/filters/http-exception.filter';
 import { ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Config } from './types';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -12,6 +13,16 @@ async function bootstrap() {
   
   // 设置全局路由前缀
   app.setGlobalPrefix('api');
+  
+  // 配置 Swagger
+  const config = new DocumentBuilder()
+    .setTitle('FE Integration API')
+    .setDescription('前端集成服务 API 文档')
+    .setVersion('1.0')
+    .addTag('integration')
+    .build();
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('api-docs', app, document);
   
   // 应用全局验证管道
   app.useGlobalPipes(new ValidationPipe({

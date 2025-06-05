@@ -13,6 +13,7 @@
 - 使用 JSON 文件的形式存储易变的配置，存储在项目下的 /config 文件夹
 - 使用 sqlite 存储流程执行数据，数据库文件存储在项目下的 /data 文件夹
 - 项目下提供一个 env.yaml 与 env.example.yaml，用于运行相关的环境变量，以一个 ConfigService 进行读取
+- 使用 swagger 作为 API 文档
 
 配置信息包含:
 
