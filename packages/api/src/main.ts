@@ -28,7 +28,7 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe({
     transform: true, // 自动转换类型
     whitelist: true, // 去除未定义的属性
-    forbidNonWhitelisted: true, // 禁止未定义的属性
+    forbidNonWhitelisted: false, // 允许未定义的属性
   }));
   
   // 应用全局拦截器

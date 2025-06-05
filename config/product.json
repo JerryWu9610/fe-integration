@@ -1,0 +1,14 @@
+{
+    "xdr-local": {
+        "name": "分布式 XDR",
+        "feIntegrationRepo": "apex-fe-integration",
+        "fullIntegrationRepo": "xdr-local",
+        "procedures": ["local-integration"]
+    },
+    "integrated": {
+        "name": "AI 安全平台",
+        "feIntegrationRepo": "apex-fe-integration",
+        "fullIntegrationRepo": "application",
+        "procedures": ["local-integration"]
+    }
+}

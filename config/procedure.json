@@ -1,0 +1,12 @@
+{
+    "local-integration": {
+        "name": "分布式集成",
+        "products": ["xdr-local", "integrated"],
+        "steps": ["fe-integration", "fe-pack", "local-integration"]
+    },
+    "cmp-integration": {
+        "name": "CMP集成",
+        "products": ["integrated"],
+        "steps": ["fe-integration", "fe-pack", "cmp-integration"]
+    }
+}

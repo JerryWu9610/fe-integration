@@ -1,0 +1,35 @@
+{
+    "xdr": {
+        "gitlab": {
+            "apiBaseUrl": "https://gitlab.com",
+            "apiToken": "glpat-1234567890",
+            "projectId": 1234567890
+        },
+        "artifact": {
+            "repoId": 1234567890,
+            "pkgNamePrefix": "xdr"
+        }
+    },
+    "apex-base": {
+        "gitlab": {
+            "apiBaseUrl": "https://gitlab.com",
+            "apiToken": "glpat-1234567890",
+            "projectId": 1234567890
+        },
+        "artifact": {
+            "repoId": 1234567890,
+            "pkgNamePrefix": "apex-base"
+        }
+    },
+    "apex-business": {
+        "gitlab": {
+            "apiBaseUrl": "https://gitlab.com",
+            "apiToken": "glpat-1234567890",
+            "projectId": 1234567890
+        },
+        "artifact": {
+            "repoId": 1234567890,
+            "pkgNamePrefix": "apex-business"
+        }
+    }
+}

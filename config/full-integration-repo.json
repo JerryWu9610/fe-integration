@@ -1,0 +1,16 @@
+{
+    "application": {
+        "gitlab": {
+            "apiBaseUrl": "https://gitlab.com",
+            "apiToken": "glpat-1234567890",
+            "projectId": 1234567890
+        }
+    },
+    "xdr-local": {
+        "gitlab": {
+            "apiBaseUrl": "https://gitlab.com",
+            "apiToken": "glpat-1234567890",
+            "projectId": 1234567890
+        }
+    }
+}

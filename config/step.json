@@ -1,0 +1,81 @@
+{
+    "fe-integration": {
+        "name": "前端集成",
+        "description": "",
+        "paramsDef": [
+            {
+                "field": "businessRepoParams",
+                "label": "业务仓库更新参数",
+                "type": "json"
+            },
+            {
+                "field": "baselineBranch",
+                "label": "基线分支",
+                "type": "input"
+            },
+            {
+                "field": "targetBranch",
+                "label": "目标分支",
+                "type": "input"
+            }
+        ]
+    },
+    "fe-pack": {
+        "name": "前端集成打包",
+        "description": "",
+        "paramsDef": [
+            {
+                "field": "targetBranch",
+                "label": "打包分支",
+                "type": "input"
+            },
+            {
+                "field": "productType",
+                "label": "产品类型",
+                "type": "input"
+            }
+        ]
+    },
+    "local-integration": {
+        "name": "分布式整包集成",
+        "description": "",
+        "paramsDef": [
+            {
+                "field": "baselineBranch",
+                "label": "基线分支",
+                "type": "input"
+            },
+            {
+                "field": "targetBranch",
+                "label": "目标分支",
+                "type": "input"
+            },
+            {
+                "field": "createMergeRequest",
+                "label": "是否创建合并请求",
+                "type": "boolean"
+            }
+        ]
+    },
+    "cmp-integration": {
+        "name": "CMP整包集成",
+        "description": "",
+        "paramsDef": [
+            {
+                "field": "baselineBranch",
+                "label": "基线分支",
+                "type": "input"
+            },
+            {
+                "field": "targetBranch",
+                "label": "目标分支",
+                "type": "input"
+            },
+            {
+                "field": "createMergeRequest",
+                "label": "是否创建合并请求",
+                "type": "boolean"
+            }
+        ]
+    }
+}
