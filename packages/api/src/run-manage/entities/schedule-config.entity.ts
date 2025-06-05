@@ -29,6 +29,12 @@ export class ScheduleConfig {
   })
   createdBy: string;
 
+  @Column({
+    type: 'varchar',
+    default: 'manual'
+  })
+  updatedBy: string;
+
   @CreateDateColumn()
   createdAt: Date;
 

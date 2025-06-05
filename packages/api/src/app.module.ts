@@ -9,6 +9,7 @@ import * as yaml from 'js-yaml';
 import { Config } from './business-config/types';
 import { BusinessConfigModule } from './business-config/business-config.module';
 import { RunManageModule } from './run-manage/run-manage.module';
+import { ExecutionModule } from './execution/execution.module';
 
 @Module({
   imports: [
@@ -38,6 +39,7 @@ import { RunManageModule } from './run-manage/run-manage.module';
     }),
     BusinessConfigModule,
     RunManageModule,
+    ExecutionModule,
   ],
   controllers: [AppController],
   providers: [AppService],
