@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { promises as fs } from 'fs';
@@ -7,6 +8,7 @@ import { resolve } from 'path';
 import * as yaml from 'js-yaml';
 import { Config } from './business-config/types';
 import { BusinessConfigModule } from './business-config/business-config.module';
+import { RunManageModule } from './run-manage/run-manage.module';
 
 @Module({
   imports: [
@@ -23,7 +25,19 @@ import { BusinessConfigModule } from './business-config/business-config.module';
         }
       }],
     }),
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: (configService: ConfigService) => ({
+        type: 'sqlite',
+        database: resolve(__dirname, '../../..', 'data', 'database.sqlite'),
+        entities: [resolve(__dirname, '**', '*.entity{.ts,.js}')],
+        synchronize: configService.get('NODE_ENV') !== 'production',
+        logging: configService.get('NODE_ENV') !== 'production',
+      }),
+      inject: [ConfigService],
+    }),
     BusinessConfigModule,
+    RunManageModule,
   ],
   controllers: [AppController],
   providers: [AppService],
