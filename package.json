@@ -1,0 +1,13 @@
+{
+  "name": "fe-integration",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "pnpm -r build",
+    "dev": "pnpm --filter api dev",
+    "start": "pnpm --filter api start"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  }
+} 
