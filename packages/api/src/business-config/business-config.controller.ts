@@ -17,7 +17,11 @@ export class BusinessConfigController {
   })
   @Post('get_product_list')
   async getProductList(): Promise<GetProductListResDto[]> {
-    return this.businessConfigService.getProductList();
+    const products = await this.businessConfigService.getProductList();
+    return products.map(product => ({
+      id: product.id,
+      name: product.name,
+    }));
   }
 
   @ApiOperation({ summary: 'Get procedures', description: 'Retrieves a list of procedures with their steps for a specific product' })
@@ -28,6 +32,16 @@ export class BusinessConfigController {
   })
   @Post('get_procedure_list')
   async getProcedureList(@Body() body: GetProceduresReqDto): Promise<GetProceduresResDto[]> {
-    return this.businessConfigService.getProcedureList({ product: body.product });
+    const procedures = await this.businessConfigService.getProcedureList({ product: body.product });
+    return procedures.map(procedure => ({
+      id: procedure.id,
+      name: procedure.name,
+      steps: procedure.steps.map(step => ({
+        id: step.id,
+        name: step.name,
+        description: step.description,
+        paramsDef: step.paramsDef,
+      })),
+    }));
   }
 } 

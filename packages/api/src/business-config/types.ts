@@ -77,4 +77,23 @@ export interface Config {
 export interface BusinessConfigCacheItem<T> {
   data: T;
   timestamp: number;
+}
+
+// Domain types for business config service
+export interface ProductListItem {
+  id: string;
+  name: string;
+}
+
+export interface Step {
+  id: string;
+  name: string;
+  description: string;
+  paramsDef: ParamDef[];
+}
+
+export interface ProcedureListItem {
+  id: string;
+  name: string;
+  steps: Step[];
 } 

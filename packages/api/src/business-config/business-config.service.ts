@@ -1,9 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { promises as fs } from 'fs';
 import { resolve } from 'path';
-import { GetProductListResDto } from './dto/product.dto';
-import { GetProceduresResDto, StepDto } from './dto/procedure.dto';
-import { BusinessConfigCacheItem, StepConfig, ProcedureConfigRoot, StepConfigRoot, ProductConfigRoot } from './types';
+import { BusinessConfigCacheItem, ProcedureConfigRoot, StepConfigRoot, ProductConfigRoot, ProductListItem, ProcedureListItem } from './types';
 import { readFile } from 'fs/promises';
 
 @Injectable()
@@ -32,7 +29,7 @@ export class BusinessConfigService {
     return data;
   }
 
-  async getProductList(): Promise<GetProductListResDto[]> {
+  async getProductList(): Promise<ProductListItem[]> {
     const productConfig = await this.readConfigFile<ProductConfigRoot>('product.json');
     
     return Object.entries(productConfig).map(([id, config]) => ({
@@ -41,7 +38,7 @@ export class BusinessConfigService {
     }));
   }
 
-  async getProcedureList({ product }: { product: string }): Promise<GetProceduresResDto[]> {
+  async getProcedureList({ product }: { product: string }): Promise<ProcedureListItem[]> {
     // 1. 读取产品配置，验证产品是否存在
     const productConfig = await this.readConfigFile<ProductConfigRoot>('product.json');
     if (!productConfig[product]) {
