@@ -6,6 +6,7 @@ import { ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Config } from './types';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { ApiAuth } from '@common/decorators/api.decorator';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -13,16 +14,6 @@ async function bootstrap() {
   
   // 设置全局路由前缀
   app.setGlobalPrefix('api');
-  
-  // 配置 Swagger
-  const config = new DocumentBuilder()
-    .setTitle('FE Integration API')
-    .setDescription('前端集成服务 API 文档')
-    .setVersion('1.0')
-    .addTag('integration')
-    .build();
-  const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api-docs', app, document);
   
   // 应用全局验证管道
   app.useGlobalPipes(new ValidationPipe({
@@ -36,6 +27,37 @@ async function bootstrap() {
   
   // 应用全局异常过滤器
   app.useGlobalFilters(new HttpExceptionFilter());
+
+  // Swagger 配置
+  const config = new DocumentBuilder()
+    .setTitle('FE Integration API')
+    .setDescription('前端集成服务 API 文档')
+    .setVersion('1.0')
+    .addTag('integration')
+    .addBearerAuth(
+      {
+        type: 'http',
+        scheme: 'bearer',
+        name: 'Authorization',
+        description: 'Enter Gitlab API Token',
+        in: 'header',
+      },
+      'access-token',
+    )
+    .build();
+
+  const document = SwaggerModule.createDocument(app, config);
+  // 添加全局 API 装饰器
+  SwaggerModule.setup('api-docs', app, document, {
+    swaggerOptions: {
+      persistAuthorization: true,
+      security: [{ 'access-token': [] }], // 默认启用认证
+    },
+    customSiteTitle: 'FE Integration API',
+    customCss: '.swagger-ui .topbar { display: none }',
+    customJs: '/custom.js',
+    customfavIcon: '/favicon.ico'
+  });
 
   const port = configService.get('server.port', { infer: true }) ?? 3000;
   const host = configService.get('server.host', { infer: true }) ?? 'localhost';

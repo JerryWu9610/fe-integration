@@ -1,0 +1,6 @@
+export enum ErrorCode {
+  AUTH_ERROR = 'AUTH_ERROR',
+  FORBIDDEN = 'FORBIDDEN',
+  NOT_FOUND = 'NOT_FOUND',
+  INVALID_PARAMS = 'INVALID_PARAMS',
+} 

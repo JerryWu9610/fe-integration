@@ -1,6 +1,14 @@
-import { ExceptionFilter, Catch, ArgumentsHost, HttpException } from '@nestjs/common';
+import { ExceptionFilter, Catch, ArgumentsHost, HttpException, UnauthorizedException, ForbiddenException, NotFoundException, BadRequestException } from '@nestjs/common';
 import { Response } from 'express';
-import { CommonResponse } from '../interfaces/response.interface';
+import { CommonResponse } from '@common/interfaces/response.interface';
+import { ErrorCode } from '@common/consts/error-codes';
+
+const ERROR_CODE_MAP = new Map<Function, ErrorCode>([
+  [UnauthorizedException, ErrorCode.AUTH_ERROR],
+  [ForbiddenException, ErrorCode.FORBIDDEN],
+  [NotFoundException, ErrorCode.NOT_FOUND],
+  [BadRequestException, ErrorCode.INVALID_PARAMS],
+]);
 
 @Catch(HttpException)
 export class HttpExceptionFilter implements ExceptionFilter {
@@ -15,8 +23,10 @@ export class HttpExceptionFilter implements ExceptionFilter {
       message = message.join(', ');
     }
 
+    const errorCode = ERROR_CODE_MAP.get(exception.constructor) || status.toString();
+
     const errorResponse: CommonResponse = {
-      code: status.toString(),
+      code: errorCode,
       message,
     };
 

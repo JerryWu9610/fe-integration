@@ -17,6 +17,9 @@ import {
   PaginatedRunRecordResDto,
   ManualTriggerResDto
 } from './dto/run-record.dto';
+import { Public } from '@module/auth/public.decorator';
+import { CurrentUser } from '@module/auth/user.decorator';
+import { UserAuthInfo } from '@module/auth/types';
 
 @ApiTags('Run Management')
 @Controller('run-manage')
@@ -26,7 +29,11 @@ export class RunManageController {
   @ApiOperation({ summary: 'Manual trigger', description: 'Manually trigger a run' })
   @ApiResponse({ status: 200, type: ManualTriggerResDto })
   @Post('manual_trigger')
-  async manualTrigger(@Body() body: ExecuteRunReqDto): Promise<ManualTriggerResDto> {
+  async manualTrigger(
+    @Body() body: ExecuteRunReqDto,
+    @CurrentUser() user: UserAuthInfo,
+  ): Promise<ManualTriggerResDto> {
+    console.log('Current user:', user.name); // 获取用户名
     const data = await this.runManageService.manualTrigger(body);
     return data;
   }
@@ -34,6 +41,7 @@ export class RunManageController {
   @ApiOperation({ summary: 'Get run records', description: 'Get paginated list of run records' })
   @ApiResponse({ status: 200, type: PaginatedRunRecordResDto })
   @Post('get_run_records')
+  @Public()
   async getRunRecords(@Body() query: GetRunRecordsReqDto): Promise<PaginatedRunRecordResDto> {
     return this.runManageService.getRunRecords(query);
   }
@@ -57,6 +65,7 @@ export class RunManageController {
   @ApiOperation({ summary: 'Get schedules', description: 'Get paginated list of schedule configurations' })
   @ApiResponse({ status: 200, type: GetScheduleResDto })
   @Post('get_schedules')
+  @Public()
   async getSchedules(@Body() query: GetSchedulesReqDto): Promise<GetScheduleResDto> {
     return this.runManageService.getSchedules(query);
   }

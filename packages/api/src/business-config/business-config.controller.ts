@@ -3,12 +3,14 @@ import { BusinessConfigService } from './business-config.service';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { GetProductListResDto } from './dto/product.dto';
 import { GetProceduresResDto, GetProceduresReqDto } from './dto/procedure.dto';
+import { Public } from '@module/auth/public.decorator';
 
 @ApiTags('Business Configuration')
 @Controller('business-config')
 export class BusinessConfigController {
   constructor(private readonly businessConfigService: BusinessConfigService) {}
 
+  @Public()
   @ApiOperation({ summary: 'Get product list', description: 'Retrieves a list of all available products' })
   @ApiResponse({ 
     status: 200, 
@@ -24,6 +26,7 @@ export class BusinessConfigController {
     }));
   }
 
+  @Public()
   @ApiOperation({ summary: 'Get procedures', description: 'Retrieves a list of procedures with their steps for a specific product' })
   @ApiResponse({ 
     status: 200, 
