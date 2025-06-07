@@ -4,8 +4,10 @@ import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { GetProductListResDto } from './dto/product.dto';
 import { GetProceduresResDto, GetProceduresReqDto } from './dto/procedure.dto';
 import { Public } from '@module/auth/public.decorator';
+import { ApiAuth } from '@common/decorators/api.decorator';
 
 @ApiTags('Business Configuration')
+@ApiAuth()
 @Controller('business-config')
 export class BusinessConfigController {
   constructor(private readonly businessConfigService: BusinessConfigService) {}

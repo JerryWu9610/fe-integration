@@ -6,7 +6,6 @@ import { ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Config } from './types';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { ApiAuth } from '@common/decorators/api.decorator';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -34,24 +33,24 @@ async function bootstrap() {
     .setDescription('前端集成服务 API 文档')
     .setVersion('1.0')
     .addTag('integration')
-    .addBearerAuth(
+    .addApiKey(
       {
-        type: 'http',
-        scheme: 'bearer',
-        name: 'Authorization',
+        type: 'apiKey',
+        name: 'PRIVATE-TOKEN',
         description: 'Enter Gitlab API Token',
         in: 'header',
       },
-      'access-token',
+      'PRIVATE-TOKEN',
     )
+    .addSecurityRequirements('PRIVATE-TOKEN')
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
-  // 添加全局 API 装饰器
+  
   SwaggerModule.setup('api-docs', app, document, {
     swaggerOptions: {
       persistAuthorization: true,
-      security: [{ 'access-token': [] }], // 默认启用认证
+      security: [{ 'PRIVATE-TOKEN': [] }],
     },
     customSiteTitle: 'FE Integration API',
     customCss: '.swagger-ui .topbar { display: none }',

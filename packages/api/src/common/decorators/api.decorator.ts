@@ -1,8 +1,8 @@
 import { applyDecorators } from '@nestjs/common';
-import { ApiBearerAuth } from '@nestjs/swagger';
+import { ApiSecurity } from '@nestjs/swagger';
 
 export const ApiAuth = () => {
   return applyDecorators(
-    ApiBearerAuth('access-token'),
+    ApiSecurity('PRIVATE-TOKEN'),
   );
 }; 

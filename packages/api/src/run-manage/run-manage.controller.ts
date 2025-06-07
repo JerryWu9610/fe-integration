@@ -20,8 +20,10 @@ import {
 import { Public } from '@module/auth/public.decorator';
 import { CurrentUser } from '@module/auth/user.decorator';
 import { UserAuthInfo } from '@module/auth/types';
+import { ApiAuth } from '@common/decorators/api.decorator';
 
 @ApiTags('Run Management')
+@ApiAuth()
 @Controller('run-manage')
 export class RunManageController {
   constructor(private readonly runManageService: RunManageService) {}
