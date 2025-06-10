@@ -1,10 +1,10 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
-import { firstValueFrom } from 'rxjs';
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { Inject } from '@nestjs/common';
 import { Cache } from 'cache-manager';
 import { ConfigService } from '@nestjs/config';
+import { Gitlab } from '@gitbeaker/rest';
 
 @Injectable()
 export class AuthService {
@@ -27,16 +27,12 @@ export class AuthService {
     }
 
     try {
-      const gitlabApiUrl = this.configService.get<string>('gitlab.auth.api_url');
-      const response = await firstValueFrom(
-        this.httpService.get(`${gitlabApiUrl}/user`, {
-          headers: {
-            'PRIVATE-TOKEN': token,
-          },
-        }),
-      );
-
-      const userData = response.data;
+      const gitlabHost = this.configService.get<string>('gitlab.auth.gitlabHost');
+      const gitlab = new Gitlab({
+        host: gitlabHost,
+        token,
+      });
+      const userData = gitlab.Users.showCurrentUser();
       
       // Cache the user data
       await this.cacheManager.set(cacheKey, userData, this.CACHE_TTL);

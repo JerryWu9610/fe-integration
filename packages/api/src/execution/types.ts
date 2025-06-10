@@ -13,3 +13,8 @@ export type ExecuteParams = {
 };
 
 export type StepHandler = (params: StepHandlerParams) => Promise<void>;
+
+export type BusinessRepoParams = Record<string, {
+  name: string;
+  version: string;
+}>;

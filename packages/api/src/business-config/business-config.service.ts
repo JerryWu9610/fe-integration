@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { resolve } from 'path';
-import { BusinessConfigCacheItem, ProcedureConfigRoot, StepConfigRoot, ProductConfigRoot, ProductListItem, ProcedureListItem } from './types';
+import { BusinessConfigCacheItem, ProcedureConfigRoot, StepConfigRoot, ProductConfigRoot, ProductListItem, ProcedureListItem, GitLabConfig, ArtifactConfig, FeIntegrationRepoConfig, BusinessRepoConfig } from './types';
 import { readFile } from 'fs/promises';
 
 @Injectable()
@@ -70,5 +70,39 @@ export class BusinessConfigService {
       });
 
     return productProcedures;
+  }
+
+  async getFeIntegrationRepoConfig(product: string): Promise<{ gitlab: GitLabConfig; artifact: ArtifactConfig }> {
+    // 1. 读取产品配置，获取前端集成仓库名称
+    const productConfig = await this.readConfigFile<ProductConfigRoot>('product.json');
+    if (!productConfig[product]) {
+      throw new Error(`Product ${product} not found`);
+    }
+
+    const feIntegrationRepo = productConfig[product].feIntegrationRepo;
+    if (!feIntegrationRepo) {
+      throw new Error(`FE integration repository not configured for product ${product}`);
+    }
+
+    // 2. 读取前端集成仓库配置
+    const feIntegrationRepoConfig = await this.readConfigFile<FeIntegrationRepoConfig>('fe-integration-repo.json');
+    if (!feIntegrationRepoConfig[feIntegrationRepo]) {
+      throw new Error(`FE integration repository ${feIntegrationRepo} not found in configuration`);
+    }
+
+    return feIntegrationRepoConfig[feIntegrationRepo];
+  }
+
+  async getBusinessRepoConfig(product: string): Promise<BusinessRepoConfig> {
+    // 1. 读取产品配置，获取业务仓库名称
+    const productConfig = await this.readConfigFile<ProductConfigRoot>('product.json');
+    if (!productConfig[product]) {
+      throw new Error(`Product ${product} not found`);
+    }
+
+    // 2. 读取业务仓库配置
+    const businessRepoConfig = await this.readConfigFile<BusinessRepoConfig>('business-repo.json');
+    
+    return businessRepoConfig;
   }
 } 

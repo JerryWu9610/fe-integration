@@ -9,7 +9,6 @@ export class ExecutionService {
     'fe-integration': async (params: StepHandlerParams) => {
       await this.stepService.executeFeIntegration({
         product: params.product,
-        procedureId: params.procedureId,
         businessRepoParams: params.stepParams.businessRepoParams || {},
         baselineBranch: params.stepParams.baselineBranch,
         targetBranch: params.stepParams.targetBranch,
@@ -18,7 +17,6 @@ export class ExecutionService {
     'fe-pack': async (params: StepHandlerParams) => {
       await this.stepService.executeFePack({
         product: params.product,
-        procedureId: params.procedureId,
         targetBranch: params.stepParams.targetBranch,
         productType: params.stepParams.productType,
       });
@@ -26,7 +24,6 @@ export class ExecutionService {
     'local-integration': async (params: StepHandlerParams) => {
       await this.stepService.executeLocalIntegration({
         product: params.product,
-        procedureId: params.procedureId,
         baselineBranch: params.stepParams.baselineBranch,
         targetBranch: params.stepParams.targetBranch,
         createMergeRequest: params.stepParams.createMergeRequest,
@@ -35,7 +32,6 @@ export class ExecutionService {
     'cmp-integration': async (params: StepHandlerParams) => {
       await this.stepService.executeCmpIntegration({
         product: params.product,
-        procedureId: params.procedureId,
         baselineBranch: params.stepParams.baselineBranch,
         targetBranch: params.stepParams.targetBranch,
         createMergeRequest: params.stepParams.createMergeRequest,

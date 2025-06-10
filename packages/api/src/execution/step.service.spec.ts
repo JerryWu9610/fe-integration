@@ -1,13 +1,14 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { StepService } from './step.service';
 import { HttpModule } from '@nestjs/axios';
+import { BusinessConfigModule } from '@module/business-config/business-config.module';
 
 describe('StepService', () => {
   let service: StepService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      imports: [HttpModule],
+      imports: [HttpModule, BusinessConfigModule],
       providers: [StepService],
     }).compile();
 
@@ -21,9 +22,8 @@ describe('StepService', () => {
   describe('executeFeIntegration', () => {
     it('should execute frontend integration', async () => {
       const params = {
-        product: 'test-product',
-        procedureId: 'test-procedure',
-        businessRepoParams: { key: 'value' },
+        product: 'xdr-local',
+        businessRepoParams: { key: { name: 'value', version: '1.0.0' } },
         baselineBranch: 'main',
         targetBranch: 'feature/test'
       };
@@ -36,7 +36,6 @@ describe('StepService', () => {
     it('should execute frontend pack', async () => {
       const params = {
         product: 'test-product',
-        procedureId: 'test-procedure',
         targetBranch: 'feature/test',
         productType: 'web'
       };
@@ -49,7 +48,6 @@ describe('StepService', () => {
     it('should execute local integration', async () => {
       const params = {
         product: 'test-product',
-        procedureId: 'test-procedure',
         baselineBranch: 'main',
         targetBranch: 'feature/test',
         createMergeRequest: true
@@ -63,7 +61,6 @@ describe('StepService', () => {
     it('should execute CMP integration', async () => {
       const params = {
         product: 'test-product',
-        procedureId: 'test-procedure',
         baselineBranch: 'main',
         targetBranch: 'feature/test',
         createMergeRequest: true
